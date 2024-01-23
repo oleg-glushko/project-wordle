@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { sample } from '../../utils';
 import { WORDS } from '../../data';
+import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
 
 import GuessInput from '../GuessInput';
 import GuessesOutput from '../GuessesOutput';
@@ -14,9 +15,10 @@ console.info({ answer });
 function Game() {
 
     const [guesses, setGuesses] = useState([]);
+    const [isWon, setWon] = useState(false);
 
     function handleNewGuess(guess) {
-        if (guesses.length >= 6) {
+        if (guesses.length >= NUM_OF_GUESSES_ALLOWED) {
             alert("You're out of tries!");
             return;
         }
@@ -27,12 +29,32 @@ function Game() {
             return;
         }
 
+        if (guess === answer) setWon(true);
+
         setGuesses([...guesses, guess]);
     }
+
+    const isEnded = isWon || guesses.length >= NUM_OF_GUESSES_ALLOWED;
+
     return (
         <>
             <GuessesOutput guesses={guesses} answer={answer} />
-            <GuessInput handleNewGuess={handleNewGuess} />
+            <GuessInput handleNewGuess={handleNewGuess} isEnded={isEnded} />
+            {isWon &&
+                <div className="happy banner">
+                    <p>
+                        <strong>Congratulations!</strong> Got it in{' '}
+                        <strong>{guesses.length} guesses</strong>.
+                    </p>
+                </div>
+            }
+            {isEnded && !isWon &&
+                <div className="sad banner">
+                    <p>
+                        Sorry, the correct answer is{' '}
+                        <strong>{answer}</strong>.
+                    </p>
+                </div>}
         </>
     );
 }

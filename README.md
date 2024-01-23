@@ -171,3 +171,42 @@ Your task is to use this function to validate the user's guesses, and apply the 
 - Import the `checkGuess` function from `/src/game-helpers.js`, and use it to validate each of the user's guesses
 - When rendering the letters in the `Guess` component, apply the letter's `status` to the `cell` element.
 - "Empty" guess slots should have the same markup as before: `<span class="cell"></span>`.
+
+## Exercise 5: winning and losing
+
+We're so close! We only have one concern left: ending the game.
+
+If the user wins the game, a happy banner should be shown:
+
+![Screenshot of a won game, showing a green success banner](docs/happy-banner.png)
+
+If the user loses the game, by contrast, a sad banner should be shown:
+
+![Screenshot of a won game, showing a red failure banner](docs/sad-banner.png)
+
+The user wins the game when their guessed word is identical to the `answer`. They lose the game if they submit 6 guesses without winning.
+
+```html
+<div class="happy banner">
+  <p>
+    <strong>Congratulations!</strong> Got it in
+    <strong>3 guesses</strong>.
+  </p>
+</div>
+```
+
+```html
+<div class="sad banner">
+  <p>Sorry, the correct answer is <strong>LEARN</strong>.</p>
+</div>
+```
+
+When the game is over, one of these banners should be shown, and the text input should be disabled so that no new guesses can be typed or submitted.
+
+**Acceptance Criteria:**
+
+- If the user wins the game, a happy banner should be shown.
+- If the user loses the game, a sad banner should be shown
+- When the game is over, the text input should be disabled.
+- It's up to you to decide how to structure the banner! Feel free to create new component(s) if you think it's warranted.
+
