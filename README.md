@@ -48,27 +48,71 @@ Here's a quick screen recording of the expected result:
 - The input should have a minimum and maximum length of 5.
   - **NOTE:** The `minLength` validator is a bit funky; you may wish to use the `pattern` attribute instead. This is discussed in more detail on the [Solution page](https://courses.joshwcomeau.com/joy-of-react/project-wordle/06-solution#an-alternative-to-minlength).
 
-## Exercise 2: Keeping track of guesses
+## Exercise 3: Guess slots
 
-Instead of obliterating the user's guess, let's add it to a list, so we can show the user all of their previously-submitted guesses!
+In the real Wordle game, the initial screen shows 6 rows of 5 squares:
 
-For now, we aren't worrying about any game-logic stuff. We're still setting up the scaffolding, getting some of the component + DOM structure in place.
+![Screenshot of real Wordle, showing a 5x6 grid](docs/wordle-squares.png)
 
-Our goal in this exercise is to render each of the user's guesses:
+In this exercise, we'll update our code to display a similar grid. We'll show 6 rows of guesses, no matter how many guesses the user has submitted, and each row will consist of 5 cells.
 
-![Screen recording showing each guess printed out above the text input from the last exercise](docs/printed-word-list.gif)
+As the user submits guesses, their guess will populate the cells:
 
-And here's an example of the expected DOM structure:
+![Screen recording showing each guess being added to the 5x6 grid](docs/words-in-cells.gif)
+
+Here's the DOM structure you'll want to create dynamically, based on the user's guesses:
 
 ```html
 <div class="guess-results">
-  <p class="guess">FIRST</p>
-  <p class="guess">GUESS</p>
+  <p class="guess">
+    <span class="cell">H</span>
+    <span class="cell">E</span>
+    <span class="cell">L</span>
+    <span class="cell">L</span>
+    <span class="cell">O</span>
+  </p>
+  <p class="guess">
+    <span class="cell">T</span>
+    <span class="cell">H</span>
+    <span class="cell">E</span>
+    <span class="cell">R</span>
+    <span class="cell">E</span>
+  </p>
+  <p class="guess">
+    <span class="cell">W</span>
+    <span class="cell">O</span>
+    <span class="cell">R</span>
+    <span class="cell">L</span>
+    <span class="cell">D</span>
+  </p>
+  <p class="guess">
+    <span class="cell"></span>
+    <span class="cell"></span>
+    <span class="cell"></span>
+    <span class="cell"></span>
+    <span class="cell"></span>
+  </p>
+  <p class="guess">
+    <span class="cell"></span>
+    <span class="cell"></span>
+    <span class="cell"></span>
+    <span class="cell"></span>
+    <span class="cell"></span>
+  </p>
 </div>
 ```
 
+**Things to know:**
+
+There are two things that should help you tackle this exercise:
+
+1. You can use the `range` utility to create arrays of a specified length to map over. It's provided in `/src/utils.js`. Check out the “Range Utility” lesson in the course for more info on how to use it.
+2. Inside `/src/constants.js`, you'll find a constant, `NUM_OF_GUESSES_ALLOWED`. You should import and use this constant when generating the set of guesses. This would make it easy for us to change the difficulty of the game later on, by increasing/decreasing the # of guesses.
+
 **Acceptance Criteria:**
 
-- A new component should be created, to render previous guesses.
-- When the user submits their guess, that value should be rendered within this new component.
-- There should be no key warnings in the console!
+- Create a new `Guess` component. 6 instances should be rendered at all times, no matter how many guesses have been submitted.
+- The `Guess` component should render 5 spans, each with the class of `cell`.
+- Each cell should contain a letter, if the `Guess` instance has been given a value. If not, the cell should be blank.
+- Use the `NUM_OF_GUESSES_ALLOWED` constant, when needed.
+- No `key` warnings in the console.
