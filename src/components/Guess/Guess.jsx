@@ -1,11 +1,13 @@
-const emptyString = Array(5).fill(" ");
+import { checkGuess } from "../../game-helpers";
 
-function Guess({ value }) {
-    const letters = value?.split("") ?? emptyString;
+const emptyString = Array(5).fill({ letter: "", status: "" });
+
+function Guess({ value, answer }) {
+    const letters = value ? checkGuess(value, answer) : emptyString;
 
     return <p className="guess">
-        {letters.map((letter, index) => (
-            <span className="cell" key={index}>{letter}</span>))}
+        {letters.map(({ letter, status }, index) => (
+            <span className={`cell ${status}`} key={index}>{letter}</span>))}
     </p>
 }
 
