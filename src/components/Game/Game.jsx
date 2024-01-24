@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { sample } from '../../utils';
 import { WORDS } from '../../data';
@@ -8,21 +8,23 @@ import GuessInput from '../GuessInput';
 import GuessesOutput from '../GuessesOutput';
 import Keyboard from '../Keyboard';
 
-// Pick a random word on every pageload.
-const answer = sample(WORDS);
-// To make debugging easier, we'll log the solution in the console.
-console.info({ answer });
 
 function Game() {
     const [guesses, setGuesses] = useState([]);
     const [isWon, setWon] = useState(false);
+    // Pick a random word on every pageload.
+    const [answer, setAnswer] = useState(sample(WORDS));
+
+    useEffect(() => {
+        // To make debugging easier, we'll log the solution in the console.
+        console.info({ answer });
+    }, [answer]);
 
     function handleNewGuess(guess) {
         if (guesses.length >= NUM_OF_GUESSES_ALLOWED) {
             alert("You're out of tries!");
             return;
         }
-
 
         if (guesses.includes(guess)) {
             alert("This word is guessed already!");
@@ -32,6 +34,12 @@ function Game() {
         if (guess === answer) setWon(true);
 
         setGuesses([...guesses, guess]);
+    }
+
+    function handleReset() {
+        setAnswer(sample(WORDS));
+        setGuesses([]);
+        setWon(false);
     }
 
     const isEnded = isWon || guesses.length >= NUM_OF_GUESSES_ALLOWED;
@@ -46,7 +54,8 @@ function Game() {
                 <div className="happy banner">
                     <p>
                         <strong>Congratulations!</strong> Got it in{' '}
-                        <strong>{guesses.length} guesses</strong>.
+                        <strong>{guesses.length} guesses</strong>.{' '}
+                        <button onClick={handleReset}>↺ Restart</button>
                     </p>
                 </div>
             }
@@ -54,7 +63,8 @@ function Game() {
                 <div className="sad banner">
                     <p>
                         Sorry, the correct answer is{' '}
-                        <strong>{answer}</strong>.
+                        <strong>{answer}</strong>.{' '}
+                        <button onClick={handleReset}>↺ Restart</button>
                     </p>
                 </div>
             }
