@@ -53,3 +53,29 @@ export function checkGuess(guess, answer) {
 
     return result;
 }
+
+export function reduceLetterState(letter, allLettersStates) {
+    const thisLetterStates = allLettersStates.filter(item => item.letter === letter);
+    let status = "unused";
+    if (thisLetterStates.length === 0) return status;
+    if (thisLetterStates.length === 1) return thisLetterStates[0].status;
+
+    thisLetterStates.forEach(({ status: nextStatus }) => {
+        switch (nextStatus) {
+            case "incorrect":
+                if (status === "unused")
+                    status = "incorrect";
+                break;
+            case "misplaced":
+                if (status === "unused" || status === "incorrect")
+                    status = "misplaced";
+                break;
+            case "correct":
+                status = "correct";
+                break;
+            default:
+                throw new Error("State is invalid");
+        }
+    });
+    return status;
+}

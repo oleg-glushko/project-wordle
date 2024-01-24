@@ -210,3 +210,39 @@ When the game is over, one of these banners should be shown, and the text input 
 - When the game is over, the text input should be disabled.
 - It's up to you to decide how to structure the banner! Feel free to create new component(s) if you think it's warranted.
 
+---
+
+# Stretch Goals
+
+If you're looking for an additional challenge, give these stretch goals a shot!
+
+Unlike the standard exercises, no solution video is available for these goals, though the raw solution source code is available. See the solutions page on the Course Platform.
+
+Also, feel free to come up with _your own_ stretch goals! If there's a thing you'd like to implement, go for it!!
+
+## Visual Keyboard
+
+In the real Wordle game, a keyboard is shown below the guesses:
+
+![Screenshot of the Wordle game, showing a keyboard below the game board](docs/bottom-keyboard-original.png)
+
+This keyboard is an important game element, since it makes it easy to tell which letters have already been tested.
+
+Here's what the keyboard looked like in my implementation:
+
+![Screenshot of our Wordle clone, showing a keyboard below the game board](docs/bottom-keyboard-clone.png)
+
+**Note: Styling isn't provided for stretch goals.** You'll need to come up with your own CSS. You can add it to `src/styles.css`.
+
+**Relatedly:** When you add a keyboard, it'll likely be pushed "below the fold" on smaller windows. Don't worry about trying to fit everything in the viewport at once.
+
+**Acceptance Criteria:**
+
+- Render 3 rows of letters at the bottom of the screen
+- The colors of each letter should match the colors shown in the game board:
+  - Correct letters should have a green background and white text
+  - Misplaced letters should have a yellow background and white text
+  - Incorrect letters should have a dark gray background and white text
+  - Unused letters should have a light gray background and black text
+- No need to include "Enter" and "Backspace" keys.
+- Don't worry too much about the styling, trying to get the alignment to look exactly like a real keyboard.

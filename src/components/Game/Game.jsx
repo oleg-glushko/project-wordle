@@ -6,6 +6,7 @@ import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
 
 import GuessInput from '../GuessInput';
 import GuessesOutput from '../GuessesOutput';
+import Keyboard from '../Keyboard';
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
@@ -13,7 +14,6 @@ const answer = sample(WORDS);
 console.info({ answer });
 
 function Game() {
-
     const [guesses, setGuesses] = useState([]);
     const [isWon, setWon] = useState(false);
 
@@ -40,6 +40,8 @@ function Game() {
         <>
             <GuessesOutput guesses={guesses} answer={answer} />
             <GuessInput handleNewGuess={handleNewGuess} isEnded={isEnded} />
+            <Keyboard guesses={guesses} answer={answer} />
+
             {isWon &&
                 <div className="happy banner">
                     <p>
@@ -54,9 +56,10 @@ function Game() {
                         Sorry, the correct answer is{' '}
                         <strong>{answer}</strong>.
                     </p>
-                </div>}
+                </div>
+            }
         </>
-    );
+    )
 }
 
 export default Game;
